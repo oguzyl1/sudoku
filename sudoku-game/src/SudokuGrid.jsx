@@ -32,8 +32,8 @@ function SudokuGrid({ cells, setCells, selectedCell, setSelectedCell }) {
             onChange={(e) => handleChange(index, e.target.value)}
             maxLength="1"
             style={{
-              marginBottom: row % 3 === 2 ? '15px' : '0',
-              marginRight: col % 3 === 2 ? '15px' : '0',
+              marginBottom: row % 3 === 2 & row !== 8 ? '15px' : '0',
+              marginRight: col % 3 === 2 & col !==8 ? '15px' : '0',
             }}
           />
         );

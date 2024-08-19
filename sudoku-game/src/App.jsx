@@ -18,6 +18,45 @@ function App() {
     }
   };
 
+
+  //blok kontrolleri için
+  const sudokuControl = ((cells,index,value)=>{
+    const row = Math.floor(index/9);
+    const col = index % 9;
+
+    //9*9 üzerinde satır ve sütun kontrolü
+    for(let i =0;i<9;i++){
+      const cellIndex = (row * 9) + i; // örneğin seçtğimiz kutu 1. satırda 1*9 + 0 , 1*9+1 ... diye gidip o satırı dolaşacak
+      if(cells[cellIndex]?.value === value && cellIndex !== index ){
+        return false;
+    }
+  }
+
+    for(let i=0;i<9;i++){
+      const cellIndex = col + (i*9);
+      if(cells[cellIndex]?.value === value && cellIndex !== index){
+        return false;
+      }
+    }
+
+    //3*3 bloklarda kontrol için
+    const littleRow = Math.floor(row/3)*3;
+    const littleCol = Math.floor(col/3)*3;
+
+    for(let i = 0 ; i<3 ;i ++){
+      for(let j = 0 ; j<3 ; j++){
+        const cellIndex = (littleRow+i) * 9 +(littleCol +j);
+        if(cells[cellIndex]?.value === value && cellIndex !== index){
+          return false;
+        }
+      }
+    }
+
+    //yukarıdaki olumsuz şartların hiçbiri olmazsa true dönecek yani sayı oraya yerleştirilebilir
+    return true;
+
+  });
+
   // Zorluk seviyesini değiştirme işlevi
   const handleLevelChange = (newLevel) => {
     setDifficulty(newLevel);
@@ -32,7 +71,8 @@ function App() {
       const randomIndex = Math.floor(Math.random() * 81);
       const randomValue = Math.floor(Math.random() * 9) + 1;
       
-      if (!filledIndexes.has(randomIndex)) {
+      //rastgele seçilen satırların kontrolü
+      if (!filledIndexes.has(randomIndex) && sudokuControl(newCells,randomIndex,randomValue.toString())) {
         newCells[randomIndex] = { value: randomValue.toString(), locked: true };
         filledIndexes.add(randomIndex);
       }
