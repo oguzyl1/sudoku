@@ -1,17 +1,17 @@
 /*burada sürekli kullanacağım renk font vs gibi şeyleri tanımlıyorum
 kullanım kolaylığı açısından
 */
-:root{
-  --text-color: #8E9A9B;
-  --main-color:#ffffff;
-  --shadow-color:#f0f2f5;
-  --small-font-size : 1rem;
+:root {
+  --text-color: #8e9a9b;
+  --main-color: #ffffff;
+  --shadow-color: #f0f2f5;
+  --small-font-size: 1rem;
   --medium-font-size: 1.5rem;
   --large-font-size: 2.5rem;
-  --grid-text-color:hsl(185, 6%, 45%)
+  --grid-text-color: hsl(185, 6%, 45%);
 }
 
-body{
+body {
   font-family: "Roboto", cursive;
   height: 100vh;
   background-color: rgb(255, 255, 255);
@@ -19,8 +19,7 @@ body{
   user-select: none; /* metinlerin seçilmesini engeller */
 }
 
-
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -28,7 +27,7 @@ body{
 }
 
 /*navbar css özellikleri*/
-nav{
+nav {
   background-color: var(--main-color);
   color: black;
   position: fixed; /*ekranda sabit kalması için*/
@@ -39,9 +38,9 @@ nav{
 }
 
 /*yazının responsive şekilde ortalanmasını sağladık*/
-.nav-container{
+.nav-container {
   max-width: 1280px;
-  margin:auto;
+  margin: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,22 +48,22 @@ nav{
   height: 80px;
 }
 
-.nav-logo{
+.nav-logo {
   font-size: var(--large-font-size);
   color: var(--text-color);
   text-align: center;
 }
 
-a{
+a {
   text-decoration: none;
   color: unset;
 }
 
 /* app.jsx içindeki div elemanlarının css düzeltmeleri*/
-.main{
+.main {
   height: 100vh;
   padding-top: 80px;
-  display:grid;
+  display: grid;
   place-items: center;
 }
 
@@ -79,8 +78,7 @@ a{
   justify-content: center; /* Yatay olarak ortala */
 }
 
-
-.game-screen{
+.game-screen {
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -89,7 +87,6 @@ a{
   padding: 35px 0;
   overflow: auto;
 }
-
 
 /*sudoku tahtası ile ilgili css kısımları*/
 
@@ -104,8 +101,7 @@ a{
   margin: auto; /* Ortalamak için */
 }
 
-
-.sudoku-grid-cell{
+.sudoku-grid-cell {
   height: 40px;
   width: 40px;
   border-radius: 10px;
@@ -130,9 +126,8 @@ a{
   border: 2px solid hsl(185, 6%, 65%);
 }
 
-
 /*oyun bilgileri hakkındaki kısım için css düzenleme*/
-.game-info{
+.game-info {
   margin-top: 10px;
   width: 445px;
   display: grid;
@@ -140,9 +135,9 @@ a{
   gap: 10px;
 }
 
-.game-info-box{
+.game-info-box {
   font-size: 1.5rem;
-  color:var(--grid-text-color);
+  color: var(--grid-text-color);
   background-color: #f0f2f5;
   border-radius: 10px;
   display: grid;
@@ -150,23 +145,22 @@ a{
   padding: 8px 20px;
 }
 
-.game-info-level:hover{
+.game-info-level:hover {
   cursor: pointer;
   background-color: hsl(216, 20%, 96%);
 }
 
-.game-info-level:active{
+.game-info-level:active {
   background-color: hsl(216, 20%, 97%);
 }
 
 /*numpad için css özellikleri*/
-.numbers{
+.numbers {
   margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   gap: 5px;
 }
-
 
 .number {
   height: 40px;
@@ -186,17 +180,16 @@ a{
   background-color: hsl(216, 20%, 96%);
 }
 
-
 .number-delete-btn {
   background-color: hsl(0, 82%, 60%);
   color: #fff;
 }
 
-.number-delete-btn:hover{
+.number-delete-btn:hover {
   background-color: hsl(0, 82%, 70%);
   color: #fff;
 }
 
-.locked{
+.locked {
   background-color: hsl(216, 20%, 84%);
 }
