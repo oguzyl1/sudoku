@@ -1,30 +1,15 @@
-import { useState } from "react";
-import { sudokuControl } from "./utils/SudokuControl.js"; // Fonksiyonu içe aktar
+import { handleChange } from "./utils/HandleChange.js"; // handleChange fonksiyonunu içe aktar
 
-function SudokuGrid({ cells, setCells, selectedCell, setSelectedCell }) {
-  // Klavyeden sayı girmek için
-  const handleChange = (index, value) => {
-    const newValue = value.match(/[1-9]/) ? value : "";
-    const newCells = [...cells];
 
-    // Yeni değeri kontrol et
-    if (sudokuControl(newCells, index, newValue)) {
-      newCells[index] = { ...newCells[index], value: newValue };
-    } else {
-      // Geçersiz değer girildiğinde, hücre değerini eski haline getir
-      newCells[index] = { ...newCells[index], value: "" };
-      alert("Geçersiz sayı!");
-    }
+function SudokuGrid({ cells, setCells, selectedCell, setSelectedCell,setSkorCount }) {
 
-    setCells(newCells);
-  };
 
-  // Hücreye tıkladığımızda seçili olan hücreyi güncellemek için
   const handleCellClick = (index) => {
     if (!cells[index].locked) {
       setSelectedCell(index);
     }
   };
+
 
   return (
     <div className="sudoku-grid">
@@ -38,7 +23,7 @@ function SudokuGrid({ cells, setCells, selectedCell, setSelectedCell }) {
             type="text"
             value={cell.value}
             onClick={() => handleCellClick(index)}
-            onChange={(e) => handleChange(index, e.target.value)}
+            onChange={(e) => handleChange(cells, index, e.target.value, setCells , setSkorCount)}
             maxLength="1"
             style={{
               marginBottom: row % 3 === 2 && row !== 8 ? "15px" : "0",

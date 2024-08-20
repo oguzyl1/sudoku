@@ -93,7 +93,7 @@ a {
 /* app.jsx içindeki div elemanlarının css düzeltmeleri*/
 .main {
   height: 100vh;
-  padding-top: 80px;
+  padding-top: 6ch;
   display: grid;
   place-items: center;
 }
@@ -223,4 +223,16 @@ a {
 
 .locked {
   background-color: hsl(216, 20%, 84%);
+}
+
+/*skorboard için css*/
+.skorboard-container{
+  border: 2px solid hsl(216, 20%, 80%);
+  border-radius: 10px;
+  display: flex;
+  place-content: center;
+  align-items: center;
+  font-size: 2rem;
+  width: 200px;
+  color: #8e9a9b;
 }
