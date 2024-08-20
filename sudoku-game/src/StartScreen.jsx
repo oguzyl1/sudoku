@@ -13,14 +13,14 @@ function StartScreen({onStart}){
     }
     return (
         <div className="start-screen">
-          <h1 className="start-h1">Hoşgeldiniz!</h1>
           <input
-            className="start-input"
+            className="start-user-name start-input"
             type="text"
-            placeholder="Adınızı girin"
+            placeholder="Kullanıcı adınızı girin"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
+          <input type="password" placeholder="Şifrenizi girin" className="start-password start-input"  />
           <button className="start-btn" onClick={handleStart}>Başla</button>
         </div>
       );

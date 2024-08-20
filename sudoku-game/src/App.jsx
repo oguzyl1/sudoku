@@ -40,6 +40,7 @@ function App() {
     }
 
     initializeCells(numOfCellsToFill, setCells);
+    setSkorCount(0);
   }, [difficulty]);
 
   return (

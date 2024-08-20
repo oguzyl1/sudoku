@@ -27,33 +27,54 @@ body {
 }
 
 
-/*giriş ekranı*/
-.start-screen{
+/* Giriş ekranı */
+.start-screen {
   color: #8e9a9b;
-  font-size: 3rem;
   display: grid;
+  justify-content: center;
   place-items: center;
-  margin: 0;
 }
 
-.start-input{
+.start-input {
   border-radius: 10px;
   border: 2px solid hsl(185, 6%, 65%);
   text-align: center;
-  width: 200px;
-  height: 50px;
-  margin-top: 30px;
+  width: 250px;
+  height: 60px;
+  margin-top: 20px;
+  font-size: 1rem;
+  padding: 10px; 
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  background-color: #ffffff;
 }
 
-.start-btn{
+.start-input:focus {
+  outline: none; 
+  border-color: hsl(185, 6%, 55%); 
+}
+
+.start-btn {
   margin-top: 20px;
-  width: 70px;
-  height: 30px;
+  width: 250px;
+  height: 60px;
   border-radius: 10px;
-  border:none;
-  background-color: hsl(185, 6%, 90%);
-  color: rgb(82, 82, 82);
+  border: 2px solid hsl(185, 6%, 65%);
+  background-color: hsl(0, 0%, 90%);
+  color: hsl(0, 0%, 60%);
+  font-size: 1.5rem; 
   cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  transition: background-color 0.3s ease, transform 0.2s ease; 
+}
+
+.start-btn:hover {
+  background-color: hsl(0, 0%, 85%);
+  transform: scale(1.05); 
+}
+
+.start-btn:active {
+  background-color: hsl(0, 0%, 80%);
+  transform: scale(0.98); 
 }
 
 
