@@ -1,6 +1,6 @@
 import React from 'react';
 
-function GameInfo({ level, onLevelChange }) {
+function GameInfo({ level, onLevelChange ,playerName}) {
   const handleClick = () => {
     let newLevel;
     if (level === "Kolay") {
@@ -15,7 +15,7 @@ function GameInfo({ level, onLevelChange }) {
 
   return (
     <div className="game-info">
-      <div className="game-info-box game-info-name">Oğuzhan</div>
+      <div className="game-info-box game-info-name">{playerName}</div>
       <div
         className="game-info-box game-info-level"
         onClick={handleClick}

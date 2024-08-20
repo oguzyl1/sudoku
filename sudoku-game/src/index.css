@@ -26,6 +26,38 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+
+/*giriş ekranı*/
+.start-screen{
+  color: #8e9a9b;
+  font-size: 3rem;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 20px;
+}
+
+.start-input{
+  border-radius: 10px;
+  border: 2px solid hsl(185, 6%, 65%);
+  text-align: center;
+  width: 200px;
+  height: 50px;
+  margin-top: 80px;
+}
+
+.start-btn{
+  margin-top: 20px;
+  width: 70px;
+  height: 30px;
+  border-radius: 10px;
+  border:none;
+  background-color: hsl(185, 6%, 90%);
+  color: rgb(82, 82, 82);
+  cursor: pointer;
+}
+
+
 /*navbar css özellikleri*/
 nav {
   background-color: var(--main-color);

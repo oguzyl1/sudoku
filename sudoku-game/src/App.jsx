@@ -4,25 +4,33 @@ import SudokuGrid from "./SudokuGrid.jsx";
 import GameInfo from "./GameInfo.jsx";
 import NumberPad from "./NumberPad.jsx";
 import { sudokuControl } from "./utils/SudokuControl.js";
+import StartScreen from "./StartScreen.jsx";
 
 function App() {
-  const [cells, setCells] = useState(
-    Array(81).fill({ value: "", locked: false })
-  );
+
+
+  const [cells, setCells] = useState(Array(81).fill({ value: "", locked: false }));
   const [selectedCell, setSelectedCell] = useState(null);
   const [difficulty, setDifficulty] = useState("Kolay");
+  const [playerName, setPlayerName] = useState("");
+  const [gameStarted, setGameStarted] = useState(false);
+
+  //başlangıç ekranı
+  const handleStart = (name) => {
+    setPlayerName(name);
+    setGameStarted(true);
+  };
+
 
   // Number Pad'den sayı girmek için
   const handleNumberClick = (number) => {
     if (selectedCell !== null) {
       const newCells = [...cells];
 
-      // Eğer sayı `null` veya `""` ise, silme işlemi yap
       if (number === null || number === "") {
-        newCells[selectedCell] = { ...newCells[selectedCell], value: "" }; // Hücre değerini sıfırla
+        newCells[selectedCell] = { ...newCells[selectedCell], value: "" };
         setCells(newCells);
       } else {
-        // Girilen sayının kurala uygun olup olmadığını kontrol etme
         if (
           !cells[selectedCell].locked &&
           sudokuControl(newCells, selectedCell, number)
@@ -36,11 +44,13 @@ function App() {
     }
   };
 
+
   // Zorluk seviyesini değiştirme işlevi
   const handleLevelChange = (newLevel) => {
     setDifficulty(newLevel);
   };
 
+  
   // Hücreleri zorluk seviyesine göre başlat
   const initializeCells = useCallback((numOfCellsToFill) => {
     const newCells = Array(81).fill({ value: "", locked: false });
@@ -79,10 +89,11 @@ function App() {
   }, [difficulty, initializeCells]);
 
   return (
-    <>
-      <NavBar />
-      <div className="main">
-        <div className="screen">
+  <>
+    <NavBar />
+    <div className="main">
+      <div className="screen">
+        {gameStarted ? (
           <div className="game-screen">
             <SudokuGrid
               cells={cells}
@@ -91,13 +102,17 @@ function App() {
               setSelectedCell={setSelectedCell}
               difficulty={difficulty}
             />
-            <GameInfo level={difficulty} onLevelChange={handleLevelChange} />
+            <GameInfo level={difficulty} playerName={playerName} onLevelChange={handleLevelChange} />
             <NumberPad handleNumberClick={handleNumberClick} />
           </div>
-        </div>
+        ) : (
+          <StartScreen onStart={handleStart} />
+        )}
       </div>
-    </>
-  );
+    </div>
+  </>
+);
+
 }
 
 export default App;
