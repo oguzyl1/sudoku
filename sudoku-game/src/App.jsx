@@ -33,7 +33,7 @@ function App() {
       } else {
         if (
           !cells[selectedCell].locked &&
-          sudokuControl(newCells, selectedCell, number)
+          sudokuControl(newCells, selectedCell, number.toString())
         ) {
           newCells[selectedCell] = { ...newCells[selectedCell], value: number };
           setCells(newCells);
