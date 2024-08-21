@@ -253,7 +253,24 @@ a {
   display: flex;
   place-content: center;
   align-items: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   width: 200px;
   color: #8e9a9b;
+}
+
+/*kalan hak için css*/
+.mistake-container{
+  border: 2px solid hsl(216, 20%, 80%);
+  border-radius: 10px;
+  display: flex;
+  place-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  width: 200px;
+  color: #8e9a9b;
+}
+
+.mistake-and-score{
+  display: flex;
+  gap: 10px;
 }

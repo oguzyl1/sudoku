@@ -7,7 +7,8 @@ export const handleNumberClick = (
   selectedCell,
   cells,
   setCells,
-  setSkorCount
+  setSkorCount,
+  setMistake
 ) => {
   if (selectedCell !== null) {
     const newCells = [...cells];
@@ -30,7 +31,7 @@ export const handleNumberClick = (
           value: number.toString(),
         };
       } else {
-        alert("Geçersiz Sayı Girdiniz!");
+        setMistake((prev) => Math.max(prev - 1, 0)); 
       }
     }
 

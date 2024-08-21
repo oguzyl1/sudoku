@@ -7,20 +7,25 @@ import { initializeCells } from "./utils/initializeCells.js";
 import { handleNumberClick } from "./utils/HandleNumberClick.js";
 import StartScreen from "./StartScreen.jsx";
 import SkorBoard from "./SkorBoard.jsx";
+import Mistake from "./Mistake.jsx";
 
 function App() {
-  const [cells, setCells] = useState(Array(81).fill({ value: "", locked: false }));
+  const [cells, setCells] = useState(
+    Array(81).fill({ value: "", locked: false })
+  );
   const [selectedCell, setSelectedCell] = useState(null);
   const [difficulty, setDifficulty] = useState("Kolay");
   const [playerName, setPlayerName] = useState("");
   const [gameStarted, setGameStarted] = useState(false);
   const [skorCount, setSkorCount] = useState(0);
+  const [mistake, setMistake] = useState(0);
 
   // Başlangıç ekranı
   const handleStart = (name) => {
     setPlayerName(name);
     setGameStarted(true);
   };
+
 
   // Zorluk seviyesini değiştirme işlevi
   const handleLevelChange = (newLevel) => {
@@ -33,10 +38,13 @@ function App() {
 
     if (difficulty === "Kolay") {
       numOfCellsToFill = 30;
+      setMistake(5);
     } else if (difficulty === "Orta") {
       numOfCellsToFill = 20;
+      setMistake(4);
     } else if (difficulty === "Zor") {
       numOfCellsToFill = 10;
+      setMistake(3);
     }
 
     initializeCells(numOfCellsToFill, setCells);
@@ -50,16 +58,36 @@ function App() {
         <div className="screen">
           {gameStarted ? (
             <div className="game-screen">
-              <SkorBoard skorCount={skorCount} />
+              <div className="mistake-and-score">
+                <SkorBoard skorCount={skorCount} />
+                <Mistake mistake={mistake} />
+              </div>
+
               <SudokuGrid
                 cells={cells}
                 setCells={setCells}
                 selectedCell={selectedCell}
                 setSelectedCell={setSelectedCell}
                 setSkorCount={setSkorCount}
+                setMistake={setMistake}
               />
-              <GameInfo level={difficulty} playerName={playerName} onLevelChange={handleLevelChange} />
-              <NumberPad handleNumberClick={(number) => handleNumberClick(number, selectedCell, cells, setCells, setSkorCount)} />
+              <GameInfo
+                level={difficulty}
+                playerName={playerName}
+                onLevelChange={handleLevelChange}
+              />
+              <NumberPad
+                handleNumberClick={(number) =>
+                  handleNumberClick(
+                    number,
+                    selectedCell,
+                    cells,
+                    setCells,
+                    setSkorCount,
+                    setMistake
+                  )
+                }
+              />
             </div>
           ) : (
             <StartScreen onStart={handleStart} />

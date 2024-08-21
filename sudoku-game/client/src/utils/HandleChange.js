@@ -2,7 +2,7 @@
 
 import { sudokuControl } from "./SudokuControl.js";
 
-export const handleChange = (cells, index, value, setCells, setSkorCount) => {
+export const handleChange = (cells, index, value, setCells, setSkorCount,setMistake) => {
   const newValue = value.match(/[1-9]/) ? value : "";
   const newCells = [...cells];
   const oldValue = cells[index].value;
@@ -16,7 +16,7 @@ export const handleChange = (cells, index, value, setCells, setSkorCount) => {
     newCells[index] = { ...newCells[index], value: newValue };
   } else {
     newCells[index] = { ...newCells[index], value: "" };
-    alert("Geçersiz sayı!");
+    setMistake((prev) => Math.max(prev - 1, 0));
   }
 
   setCells(newCells);
