@@ -26,6 +26,53 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/*kayı ekranı için css*/
+.register-screen {
+  color: #8e9a9b;
+  display: grid;
+  justify-content: center;
+  place-items: center;
+}
+
+.register-input {
+  border-radius: 10px;
+  border: 2px solid hsl(185, 6%, 65%);
+  text-align: center;
+  width: 250px;
+  height: 60px;
+  margin-top: 20px;
+  font-size: 1rem;
+  padding: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+.register-input:focus {
+  outline: none;
+  border-color: hsl(185, 6%, 55%);
+}
+.register-btn {
+  margin-top: 20px;
+  width: 250px;
+  height: 60px;
+  border-radius: 10px;
+  border: 2px solid hsl(185, 6%, 65%);
+  background-color: hsl(0, 0%, 90%);
+  color: hsl(0, 0%, 60%);
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.register-btn:hover {
+  background-color: hsl(0, 0%, 85%);
+  transform: scale(1.05);
+}
+
+.register-btn:active {
+  background-color: hsl(0, 0%, 80%);
+  transform: scale(0.98);
+}
 
 /* Giriş ekranı */
 .start-screen {
@@ -43,14 +90,14 @@ body {
   height: 60px;
   margin-top: 20px;
   font-size: 1rem;
-  padding: 10px; 
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  padding: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
 }
 
 .start-input:focus {
-  outline: none; 
-  border-color: hsl(185, 6%, 55%); 
+  outline: none;
+  border-color: hsl(185, 6%, 55%);
 }
 
 .start-btn {
@@ -61,22 +108,21 @@ body {
   border: 2px solid hsl(185, 6%, 65%);
   background-color: hsl(0, 0%, 90%);
   color: hsl(0, 0%, 60%);
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   cursor: pointer;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
-  transition: background-color 0.3s ease, transform 0.2s ease; 
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .start-btn:hover {
   background-color: hsl(0, 0%, 85%);
-  transform: scale(1.05); 
+  transform: scale(1.05);
 }
 
 .start-btn:active {
   background-color: hsl(0, 0%, 80%);
-  transform: scale(0.98); 
+  transform: scale(0.98);
 }
-
 
 /*navbar css özellikleri*/
 nav {
@@ -88,18 +134,41 @@ nav {
   box-shadow: 5px 2px var(--shadow-color);
   z-index: 99;
 }
-
-/*yazının responsive şekilde ortalanmasını sağladık*/
 .nav-container {
   max-width: 1280px;
   margin: auto;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 40px;
+  justify-content: space-between; /* Butonlar ve logo arasında boşluk bırakmak için */
+  padding: 0 20px; /* Daha küçük padding ile sola yaklaştırdık */
   height: 80px;
 }
 
+.nav-btn{
+padding: 12px 30px;
+margin:0px 5px;
+border-radius: 10px;
+border: 2px solid hsl(185, 6%, 90%);
+background-color: hsl(0, 0%, 99%);
+color: var(--text-color);
+font-size: 1rem;
+cursor: pointer;
+box-shadow: 0px 4px 4px hsla(0, 0%, 50%, 0.1);
+transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-btn:hover {
+  background-color: hsl(0, 0%, 98%);
+  transform: scale(1.05);
+}
+
+.nav-btn:active {
+  background-color: hsl(0, 0%, 95%);
+  transform: scale(0.98);
+}
+
+
+/* Logo stilini koruduk */
 .nav-logo {
   font-size: var(--large-font-size);
   color: var(--text-color);
@@ -110,6 +179,7 @@ a {
   text-decoration: none;
   color: unset;
 }
+
 
 /* app.jsx içindeki div elemanlarının css düzeltmeleri*/
 .main {
@@ -247,7 +317,7 @@ a {
 }
 
 /*skorboard için css*/
-.skorboard-container{
+.skorboard-container {
   border: 2px solid hsl(216, 20%, 80%);
   border-radius: 10px;
   display: flex;
@@ -259,7 +329,7 @@ a {
 }
 
 /*kalan hak için css*/
-.mistake-container{
+.mistake-container {
   border: 2px solid hsl(216, 20%, 80%);
   border-radius: 10px;
   display: flex;
@@ -270,7 +340,7 @@ a {
   color: #8e9a9b;
 }
 
-.mistake-and-score{
+.mistake-and-score {
   display: flex;
   gap: 10px;
 }
