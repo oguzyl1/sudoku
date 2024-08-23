@@ -344,3 +344,83 @@ a {
   display: flex;
   gap: 10px;
 }
+
+@media (max-width: 768px) {
+  .nav-buttons {
+    width: 300px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+.nav-btn{
+  padding: 0px 0px;
+  width: 80px;
+  height: 30px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-logo{
+  font-size: 1.5rem;
+}
+
+.nav-btn:hover {
+  background-color: hsl(0, 0%, 98%);
+  transform: scale(1.05);
+}
+
+.nav-btn:active {
+  background-color: hsl(0, 0%, 95%);
+  transform: scale(0.98);
+}
+
+}
+
+
+.saved-games-screen {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  background-color:var(--main-color);
+}
+
+.saved-games-h1 {
+  font-size: 2rem;
+  width: 400px;
+  text-align: center;
+  border: 2px solid hsl(0, 0%, 82%); 
+  border-radius: 10px;
+  color: var(--text-color);
+  padding: 10px;
+  background-color: #fff; 
+  margin-bottom: 50px;
+}
+
+.saved-games-screen p {
+  color: var(--text-color); 
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+.saved-games-list {
+  list-style-type: none; 
+  padding: 0; 
+  margin: 0;
+}
+
+.saved-games-list li {
+  width: 400px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+  padding: 10px; 
+  border: 1px solid hsl(0, 0%, 82%); 
+  border-radius: 5px; 
+  background-color: #fff; 
+  transition: background-color 0.3s ease; 
+  color: var(--text-color);
+}
+
+.saved-games-list li:hover {
+  background-color: hsl(0, 0%, 95%); /* Üzerine gelindiğinde arka plan rengi */
+}

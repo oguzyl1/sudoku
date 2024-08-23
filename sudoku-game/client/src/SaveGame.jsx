@@ -9,7 +9,8 @@ function SavedGamesScreen({
   setGameStarted,
 }) {
   const [savedGames, setSavedGames] = useState([]);
-  const userId = localStorage.getItem("userId");
+  const [selectedGameId, setSelectedGameId] = useState(null);
+  const userId = localStorage.getItem("userId"); // userId'yi buradan al
 
   useEffect(() => {
     const fetchSavedGames = async () => {
@@ -17,10 +18,10 @@ function SavedGamesScreen({
         console.error("Kullanıcı kimliği bulunamadı.");
         return;
       }
-
+    
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/games/load/${userId}`
+          `http://localhost:5000/api/games/user/${userId}`
         );
         setSavedGames(response.data);
       } catch (error) {
@@ -29,9 +30,10 @@ function SavedGamesScreen({
     };
 
     fetchSavedGames();
-  }, [userId]);
+  }, [userId]); // userId'yi bağımlılıklar dizisine ekleyin
 
   const handleGameClick = async (gameId) => {
+    setSelectedGameId(gameId);
     try {
       const response = await axios.get(
         `http://localhost:5000/api/games/load/${gameId}`
@@ -50,11 +52,15 @@ function SavedGamesScreen({
 
   return (
     <div className="saved-games-screen">
-      <h1>Kayıtlı Oyunlar</h1>
+      <h1 className="saved-games-h1">Kayıtlı Oyunlar</h1>
       <ul className="saved-games-list">
         {savedGames.length > 0 ? (
           savedGames.map((game) => (
-            <li key={game._id} onClick={() => handleGameClick(game._id)}>
+            <li
+              key={game._id}
+              onClick={() => handleGameClick(game._id)}
+              style={{ cursor: "pointer", marginBottom: "10px" }}
+            >
               {game.name}
             </li>
           ))
@@ -62,6 +68,7 @@ function SavedGamesScreen({
           <p>Kayıtlı oyun bulunamadı.</p>
         )}
       </ul>
+      {selectedGameId && <p>Seçili Oyun ID: {selectedGameId}</p>}
     </div>
   );
 }

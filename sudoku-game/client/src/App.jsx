@@ -23,6 +23,7 @@ function App() {
   const [gameStarted, setGameStarted] = useState(false);
   const [skorCount, setSkorCount] = useState(0);
   const [mistake, setMistake] = useState(0);
+  const [isGameOver, setIsGameOver] = useState(false); // İlgili state eklenmeli
 
   const handleStart = (name) => {
     setPlayerName(name);
@@ -35,9 +36,10 @@ function App() {
 
   const handleNewGame = () => {
     setCells(Array(81).fill({ value: "", locked: false }));
+    initializeCells(30, setCells);
     setSelectedCell(null);
     setSkorCount(0);
-    setMistake(0);
+    setMistake(5);
     setGameStarted(true);
   };
 
@@ -46,54 +48,91 @@ function App() {
       alert("Lütfen önce bir oyun başlatın!");
       return;
     }
-  
+
     const gameName = prompt("Oyununuz için bir isim girin:");
     if (!gameName) {
       alert("Geçerli bir oyun ismi girin.");
       return;
     }
-  
+
     try {
-      const userId = localStorage.getItem('userId'); // userId'yi localStorage'dan al
+      const userId = localStorage.getItem("userId"); // userId'yi localStorage'dan al
       if (!userId) {
         alert("Kullanıcı kimliği bulunamadı. Lütfen giriş yapın.");
         return;
       }
-  
-      const response = await axios.post('http://localhost:5000/api/games/save', {
-        user: userId, // userId'yi gönder
-        board: cells,
-        difficulty: difficulty,
-        score: skorCount,
-        mistakesLeft: mistake,
-        completed: false,
-        name: gameName
-      });
-  
+
+      const response = await axios.post(
+        "http://localhost:5000/api/games/save",
+        {
+          user: userId, // userId'yi gönder
+          board: cells,
+          difficulty: difficulty,
+          score: skorCount,
+          mistakesLeft: mistake,
+          completed: false,
+          name: gameName,
+        }
+      );
+
       if (response.status === 201) {
         alert("Oyun başarıyla kaydedildi!");
       }
     } catch (error) {
-      console.error('Oyun kaydedilirken hata oluştu:', error);
+      console.error("Oyun kaydedilirken hata oluştu:", error);
       alert("Oyun kaydedilirken bir hata oluştu.");
     }
   };
-  
 
   const handleLoadSavedGames = async () => {
     try {
+      const userId = localStorage.getItem('userId'); // userId'yi localStorage'dan al
+      if (!userId) {
+        alert("Kullanıcı kimliği bulunamadı. Lütfen giriş yapın.");
+        return [];
+      }
+
       const response = await axios.get(
-        `http://localhost:5000/api/games/load/${userId}`
-      ); // Kullanıcı ID'si ile yükleme
-      // Yüklenen oyunları işleme ve state güncelleme kodları eklenmeli
+        `http://localhost:5000/api/games/user/${userId}` // Kullanıcı ID'si ile oyunları yükle
+      );
       if (response.status === 200) {
-        // Burada oyunu yükleme işlemleri yapılacak
+        return response.data; // Bu veri, kullanıcıya gösterilecek oyunların listesini içermelidir.
       }
     } catch (error) {
-      console.error("Yüklenmiş oyunları getirirken hata oluştu:", error);
-      alert("Yüklenmiş oyunları getirirken bir hata oluştu.");
+      console.error("Kullanıcının oyunları yüklenirken hata oluştu:", error);
+      alert("Oyunlar yüklenirken bir hata oluştu.");
+      return [];
     }
   };
+
+ // API çağrısını gameId ile yap
+const handleLoadSavedGameById = async (gameId) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:5000/api/games/${gameId}`
+    );
+    if (response.status === 200) {
+      const savedGame = response.data;
+      setCells(savedGame.board);
+      setDifficulty(savedGame.difficulty);
+      setSkorCount(savedGame.score);
+      setMistake(savedGame.mistakesLeft);
+      setGameStarted(true);
+
+      if (savedGame.mistakesLeft === 0) {
+        setIsGameOver(true);
+        alert("Bu oyun bitmiş! Yeni bir oyun başlatmanız gerekiyor.");
+      } else {
+        setIsGameOver(false);
+      }
+
+      alert("Oyun başarıyla yüklendi!");
+    }
+  } catch (error) {
+    console.error("Yüklenmiş oyunları getirirken hata oluştu:", error);
+    alert("Yüklenmiş oyunları getirirken bir hata oluştu.");
+  }
+};
 
   useEffect(() => {
     let numOfCellsToFill;
@@ -166,6 +205,7 @@ function App() {
           path="/saved-games"
           element={
             <SavedGamesScreen
+              onGameSelect={handleLoadSavedGameById}
               setCells={setCells}
               setDifficulty={setDifficulty}
               setSkorCount={setSkorCount}
