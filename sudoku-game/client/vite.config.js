@@ -5,10 +5,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://localhost:5000', // Proxy ayarı
+      '/api': 'http://localhost:5000',
     },
   },
   optimizeDeps: {
-    include: ['jwt-decode'], // jwt-decode kütüphanesini dahil et
+    include: ['jwt-decode'], 
   },
 });

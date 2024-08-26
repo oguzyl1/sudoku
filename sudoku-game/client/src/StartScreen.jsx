@@ -2,28 +2,34 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {jwtDecode} from 'jwt-decode'; 
+import { jwtDecode } from "jwt-decode";
 
 function StartScreen({ onStart }) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleStart = async () => {
     if (name.trim() !== "" && password.trim() !== "") {
       try {
-        const response = await axios.post('http://localhost:5000/api/auth/login', {
-          username: name.toUpperCase(),
-          password: password
-        });
+        const response = await axios.post(
+          "http://localhost:5000/api/auth/login",
+          {
+            username: name.toUpperCase(),
+            password: password,
+          }
+        );
         const { token } = response.data;
         const decodedToken = jwtDecode(token);
-        localStorage.setItem('userId', decodedToken._id);  // Token'dan kullanıcı kimliğini alıp kaydet
+        localStorage.setItem("userId", decodedToken._id);
         onStart(name.toUpperCase());
-        navigate("/"); 
+        navigate("/");
       } catch (error) {
-        setMessage("Giriş hatası: " + (error.response?.data || "Bilinmeyen bir hata oluştu"));
+        setMessage(
+          "Giriş hatası: " +
+            (error.response?.data || "Bilinmeyen bir hata oluştu")
+        );
       }
     } else {
       alert("Lütfen geçerli bir kullanıcı adı ve şifre girin!");
@@ -31,7 +37,7 @@ function StartScreen({ onStart }) {
   };
 
   const handleRegisterRedirect = () => {
-    navigate('/register'); 
+    navigate("/register");
   };
 
   return (
@@ -50,9 +56,13 @@ function StartScreen({ onStart }) {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button className="start-btn" onClick={handleStart}>Başla</button>
+      <button className="start-btn" onClick={handleStart}>
+        Başla
+      </button>
       {message && <p>{message}</p>}
-      <button className="start-btn" onClick={handleRegisterRedirect}>Kayıt Ol</button>
+      <button className="start-btn" onClick={handleRegisterRedirect}>
+        Kayıt Ol
+      </button>
     </div>
   );
 }

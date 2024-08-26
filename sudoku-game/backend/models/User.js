@@ -20,7 +20,7 @@ userSchema.pre("save", async function (next) {
   }
 
   try {
-    // Şifreyi hash'le
+    // Şifreyi hash'leme
     const hashedPassword = await bcrypt.hash(user.password, saltRounds);
     user.password = hashedPassword;
     next();
@@ -29,7 +29,7 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-// Şifreyi doğrulama yöntemi
+// Giriş kısmında şifreyi doğrulama
 userSchema.methods.comparePassword = async function (candidatePassword) {
   try {
     const isMatch = await bcrypt.compare(candidatePassword, this.password);

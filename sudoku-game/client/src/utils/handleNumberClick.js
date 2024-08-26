@@ -17,7 +17,10 @@ export const handleNumberClick = (
     if (number === null || number === "") {
       newCells[selectedCell] = { ...newCells[selectedCell], value: "" };
       const oldScore = oldValue ? 5 : 0;
-      setSkorCount((prev) => prev - oldScore);
+      setSkorCount((prev) => Number(prev) - oldScore);
+      console.log(
+        `Score updated (remove): ${prev} - ${oldScore} = ${newScore}`
+      );
     } else {
       if (
         !cells[selectedCell].locked &&
@@ -25,13 +28,17 @@ export const handleNumberClick = (
       ) {
         const oldScore = oldValue ? 5 : 0;
         const newScore = number ? 5 : 0;
-        setSkorCount((prev) => prev + newScore - oldScore);
+        setSkorCount((prev) => Number(prev) + newScore - oldScore);
+        console.log(
+          `Score updated (add): ${prev} + ${newScore} - ${oldScore} = ${newScoreValue}`
+        );
+
         newCells[selectedCell] = {
           ...newCells[selectedCell],
           value: number.toString(),
         };
       } else {
-        setMistake((prev) => Math.max(prev - 1, 0)); 
+        setMistake((prev) => Math.max(prev - 1, 0));
       }
     }
 

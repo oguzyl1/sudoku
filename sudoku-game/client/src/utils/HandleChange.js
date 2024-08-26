@@ -2,7 +2,14 @@
 
 import { sudokuControl } from "./SudokuControl.js";
 
-export const handleChange = (cells, index, value, setCells, setSkorCount,setMistake) => {
+export const handleChange = (
+  cells,
+  index,
+  value,
+  setCells,
+  setSkorCount,
+  setMistake
+) => {
   const newValue = value.match(/[1-9]/) ? value : "";
   const newCells = [...cells];
   const oldValue = cells[index].value;

@@ -1,4 +1,4 @@
-import { handleChange } from "./utils/HandleChange.js"; // handleChange fonksiyonunu içe aktar
+import { handleChange } from "./utils/HandleChange.js";
 
 function SudokuGrid({
   cells,
@@ -6,7 +6,7 @@ function SudokuGrid({
   selectedCell,
   setSelectedCell,
   setSkorCount,
-  setMistake
+  setMistake,
 }) {
   const handleCellClick = (index) => {
     if (!cells[index].locked) {
@@ -27,7 +27,14 @@ function SudokuGrid({
             value={cell.value}
             onClick={() => handleCellClick(index)}
             onChange={(e) =>
-              handleChange(cells, index, e.target.value, setCells, setSkorCount,setMistake)
+              handleChange(
+                cells,
+                index,
+                e.target.value,
+                setCells,
+                setSkorCount,
+                setMistake
+              )
             }
             maxLength="1"
             style={{

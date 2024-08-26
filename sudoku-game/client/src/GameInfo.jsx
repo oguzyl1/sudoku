@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 function GameInfo({ level, onLevelChange, playerName }) {
   const handleClick = () => {
@@ -11,20 +11,19 @@ function GameInfo({ level, onLevelChange, playerName }) {
     } else {
       newLevel = "Kolay";
     }
-    if (onLevelChange && typeof onLevelChange === 'function') {
+    if (onLevelChange && typeof onLevelChange === "function") {
       onLevelChange(newLevel);
     } else {
-      console.error('onLevelChange işlevi geçerli değil.');
+      console.error("onLevelChange işlevi geçerli değil.");
     }
   };
 
   return (
     <div className="game-info">
-      <div className="game-info-box game-info-name">{playerName || "Oyuncu Adı"}</div>
-      <div
-        className="game-info-box game-info-level"
-        onClick={handleClick}
-      >
+      <div className="game-info-box game-info-name">
+        {playerName || "Oyuncu Adı"}
+      </div>
+      <div className="game-info-box game-info-level" onClick={handleClick}>
         {level}
       </div>
     </div>
@@ -34,7 +33,7 @@ function GameInfo({ level, onLevelChange, playerName }) {
 GameInfo.propTypes = {
   level: PropTypes.string.isRequired,
   onLevelChange: PropTypes.func.isRequired,
-  playerName: PropTypes.string
+  playerName: PropTypes.string,
 };
 
 export default GameInfo;

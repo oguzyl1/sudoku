@@ -23,7 +23,7 @@ function App() {
   const [gameStarted, setGameStarted] = useState(false);
   const [skorCount, setSkorCount] = useState(0);
   const [mistake, setMistake] = useState(0);
-  const [isGameOver, setIsGameOver] = useState(false); // İlgili state eklenmeli
+  const [isGameOver, setIsGameOver] = useState(false);
 
   const handleStart = (name) => {
     setPlayerName(name);
@@ -37,6 +37,7 @@ function App() {
   const handleNewGame = () => {
     setCells(Array(81).fill({ value: "", locked: false }));
     initializeCells(30, setCells);
+    setDifficulty("Kolay");
     setSelectedCell(null);
     setSkorCount(0);
     setMistake(5);
@@ -56,7 +57,7 @@ function App() {
     }
 
     try {
-      const userId = localStorage.getItem("userId"); // userId'yi localStorage'dan al
+      const userId = localStorage.getItem("userId");
       if (!userId) {
         alert("Kullanıcı kimliği bulunamadı. Lütfen giriş yapın.");
         return;
@@ -65,10 +66,10 @@ function App() {
       const response = await axios.post(
         "http://localhost:5000/api/games/save",
         {
-          user: userId, // userId'yi gönder
+          user: userId,
           board: cells,
           difficulty: difficulty,
-          score: skorCount,
+          score: Number(skorCount),
           mistakesLeft: mistake,
           completed: false,
           name: gameName,
@@ -86,17 +87,17 @@ function App() {
 
   const handleLoadSavedGames = async () => {
     try {
-      const userId = localStorage.getItem('userId'); // userId'yi localStorage'dan al
+      const userId = localStorage.getItem("userId");
       if (!userId) {
         alert("Kullanıcı kimliği bulunamadı. Lütfen giriş yapın.");
         return [];
       }
 
       const response = await axios.get(
-        `http://localhost:5000/api/games/user/${userId}` // Kullanıcı ID'si ile oyunları yükle
+        `http://localhost:5000/api/games/user/${userId}`
       );
       if (response.status === 200) {
-        return response.data; // Bu veri, kullanıcıya gösterilecek oyunların listesini içermelidir.
+        return response.data;
       }
     } catch (error) {
       console.error("Kullanıcının oyunları yüklenirken hata oluştu:", error);
@@ -105,21 +106,16 @@ function App() {
     }
   };
 
- // API çağrısını gameId ile yap
-const handleLoadSavedGameById = async (gameId) => {
-  try {
-    const response = await axios.get(
-      `http://localhost:5000/api/games/${gameId}`
-    );
-    if (response.status === 200) {
-      const savedGame = response.data;
-      setCells(savedGame.board);
-      setDifficulty(savedGame.difficulty);
-      setSkorCount(savedGame.score);
-      setMistake(savedGame.mistakesLeft);
+  const handleLoadSavedGameById = async (gameData) => {
+    try {
+      setCells(gameData.board);
+      setDifficulty(gameData.difficulty);
+      setSkorCount(gameData.score);
+      setMistake(gameData.mistakesLeft);
       setGameStarted(true);
+      setIsGameOver(false);
 
-      if (savedGame.mistakesLeft === 0) {
+      if (gameData.mistakesLeft === 0) {
         setIsGameOver(true);
         alert("Bu oyun bitmiş! Yeni bir oyun başlatmanız gerekiyor.");
       } else {
@@ -127,12 +123,11 @@ const handleLoadSavedGameById = async (gameId) => {
       }
 
       alert("Oyun başarıyla yüklendi!");
+    } catch (error) {
+      console.error("Yüklenmiş oyunları getirirken hata oluştu:", error);
+      alert("Yüklenmiş oyunları getirirken bir hata oluştu.");
     }
-  } catch (error) {
-    console.error("Yüklenmiş oyunları getirirken hata oluştu:", error);
-    alert("Yüklenmiş oyunları getirirken bir hata oluştu.");
-  }
-};
+  };
 
   useEffect(() => {
     let numOfCellsToFill;

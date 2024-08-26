@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function SavedGamesScreen({
+  onGameSelect,
   setCells,
   setDifficulty,
   setSkorCount,
@@ -10,7 +12,8 @@ function SavedGamesScreen({
 }) {
   const [savedGames, setSavedGames] = useState([]);
   const [selectedGameId, setSelectedGameId] = useState(null);
-  const userId = localStorage.getItem("userId"); // userId'yi buradan al
+  const userId = localStorage.getItem("userId");
+  const navigate = useNavigate(); // useNavigate doğru bir şekilde kullanıldı
 
   useEffect(() => {
     const fetchSavedGames = async () => {
@@ -18,7 +21,7 @@ function SavedGamesScreen({
         console.error("Kullanıcı kimliği bulunamadı.");
         return;
       }
-    
+
       try {
         const response = await axios.get(
           `http://localhost:5000/api/games/user/${userId}`
@@ -30,21 +33,41 @@ function SavedGamesScreen({
     };
 
     fetchSavedGames();
-  }, [userId]); // userId'yi bağımlılıklar dizisine ekleyin
+  }, [userId]);
+
+  const handleDeleteGame = async (gameId) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/games/${gameId}`);
+      setSavedGames((prev) => prev.filter((game) => game._id !== gameId));
+      if (selectedGameId === gameId) {
+        setSelectedGameId(null);
+      }
+    } catch (error) {
+      console.error("Oyun silinirken hata oluştu:", error);
+    }
+  };
 
   const handleGameClick = async (gameId) => {
     setSelectedGameId(gameId);
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/games/load/${gameId}`
+        `http://localhost:5000/api/games/${gameId}`
       );
       const gameData = response.data;
 
       setCells(gameData.board);
       setDifficulty(gameData.difficulty);
-      setSkorCount(gameData.score);
+      setSkorCount(Number(gameData.score));
       setMistake(gameData.mistakesLeft);
       setGameStarted(true);
+
+      if (onGameSelect) {
+        onGameSelect(gameData);
+      }
+
+      navigate("/");
+
+      console.log("Oyun dataları yükleniyor: ", gameData);
     } catch (error) {
       console.error("Oyun yüklenirken hata oluştu:", error);
     }
@@ -58,10 +81,24 @@ function SavedGamesScreen({
           savedGames.map((game) => (
             <li
               key={game._id}
-              onClick={() => handleGameClick(game._id)}
-              style={{ cursor: "pointer", marginBottom: "10px" }}
+              style={{
+                marginBottom: "10px",
+                display: "flex",
+                alignItems: "center",
+              }}
             >
-              {game.name}
+              <span
+                onClick={() => handleGameClick(game._id)}
+                style={{ cursor: "pointer", flexGrow: 1 }}
+              >
+                {game.name}
+              </span>
+              <button
+                className="saved-game-delete-btn"
+                onClick={() => handleDeleteGame(game._id)}
+              >
+                Sil
+              </button>
             </li>
           ))
         ) : (

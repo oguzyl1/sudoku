@@ -3,6 +3,10 @@ const express = require('express');
 const router = express.Router();
 const gameController = require('../controllers/gameController');
 
+
+//oyun silme
+router.delete("/:gameId", gameController.deleteGame);
+
 // Kullanıcıya ait oyunları yükleme
 router.get('/user/:userId', gameController.getGamesByUserId);
 

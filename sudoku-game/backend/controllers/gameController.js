@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Game = require('../models/Game');
+const mongoose = require("mongoose");
+const Game = require("../models/Game");
 
 // Kullanıcıya ait oyunları yükleme
 exports.getGamesByUserId = async (req, res) => {
@@ -50,7 +50,8 @@ exports.getGameById = async (req, res) => {
 // Oyun kaydetme
 exports.saveGame = async (req, res) => {
   try {
-    const { user, board, difficulty, score, mistakesLeft, completed, name } = req.body;
+    const { user, board, difficulty, score, mistakesLeft, completed, name } =
+      req.body;
 
     if (!mongoose.Types.ObjectId.isValid(user)) {
       return res.status(400).json({ message: "Geçersiz kullanıcı ID." });
@@ -64,7 +65,7 @@ exports.saveGame = async (req, res) => {
       score,
       mistakesLeft,
       completed,
-      name
+      name,
     });
 
     await newGame.save();
@@ -73,5 +74,24 @@ exports.saveGame = async (req, res) => {
   } catch (error) {
     console.error("Oyun kaydedilirken hata oluştu:", error);
     res.status(500).json({ message: "Oyun kaydedilirken hata oluştu." });
+  }
+};
+
+exports.deleteGame = async (req, res) => {
+  try {
+    const { gameId } = req.params;
+
+    //oyun veritabanında var mı kontrol et
+    const game = await Game.findById(gameId);
+    if (!game) {
+      return res.status(404).json({ message: "oyun bulunamadı!" });
+    }
+
+    //oyunu sil
+    await Game.findByIdAndDelete(gameId);
+    res.status(200).json({ message: "oyun başarıyla silindi" });
+  } catch (error) {
+    console.error("Oyun silinirken hata oluştu:", error);
+    res.status(500).json({ message: "Oyun silinirken hata oluştu" });
   }
 };

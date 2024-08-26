@@ -6,7 +6,7 @@ function NavBar({ onNewGame, onSaveGame, onLoadSavedGames }) {
 
   const handleNewGame = () => {
     onNewGame();
-    navigate('/'); 
+    navigate("/");
   };
 
   const handleSaveGame = () => {
@@ -15,7 +15,7 @@ function NavBar({ onNewGame, onSaveGame, onLoadSavedGames }) {
 
   const handleLoadSavedGames = () => {
     onLoadSavedGames();
-    navigate('/saved-games');
+    navigate("/saved-games");
   };
 
   return (
@@ -23,9 +23,15 @@ function NavBar({ onNewGame, onSaveGame, onLoadSavedGames }) {
       <div className="nav-container">
         <div className="nav-logo">Sudoku</div>
         <div className="nav-buttons">
-          <button className="nav-btn" onClick={handleNewGame}>Yeni Oyun</button>
-          <button className="nav-btn" onClick={handleLoadSavedGames}>Kayıtlı Oyunlar</button>
-          <button className="nav-btn" onClick={handleSaveGame}>Oyunu Kaydet</button>
+          <button className="nav-btn" onClick={handleNewGame}>
+            Yeni Oyun
+          </button>
+          <button className="nav-btn" onClick={handleLoadSavedGames}>
+            Kayıtlı Oyunlar
+          </button>
+          <button className="nav-btn" onClick={handleSaveGame}>
+            Oyunu Kaydet
+          </button>
         </div>
       </div>
     </nav>
