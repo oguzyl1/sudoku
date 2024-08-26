@@ -1,9 +1,9 @@
 import { handleChange } from "./utils/HandleChange.js";
+import React,{memo} from "react";
 
 function SudokuGrid({
   cells,
   setCells,
-  selectedCell,
   setSelectedCell,
   setSkorCount,
   setMistake,
@@ -48,4 +48,4 @@ function SudokuGrid({
   );
 }
 
-export default SudokuGrid;
+export default memo(SudokuGrid);

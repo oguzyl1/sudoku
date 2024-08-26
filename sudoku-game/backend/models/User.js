@@ -5,8 +5,14 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    minlength: 3,
+    maxlength: 20,
+  },
+  password: { type: String, required: true, minlength: 6 },
   games: [{ type: mongoose.Schema.Types.ObjectId, ref: "Game" }],
 });
 
@@ -25,7 +31,7 @@ userSchema.pre("save", async function (next) {
     user.password = hashedPassword;
     next();
   } catch (err) {
-    next(err);
+    return next(new Error("Şifre hash'lenirken bir hata oldu!"));
   }
 });
 

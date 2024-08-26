@@ -1,5 +1,8 @@
 // utils/sudokuControl.js
 export const sudokuControl = (cells, index, value) => {
+  if(!value){
+    return true;
+  }
   const row = Math.floor(index / 9);
   const col = index % 9;
 

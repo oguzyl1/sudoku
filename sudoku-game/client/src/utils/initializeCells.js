@@ -1,7 +1,7 @@
 import { sudokuControl } from "./SudokuControl.js";
 
 export const initializeCells = (numOfCellsToFill, setCells) => {
-  const newCells = Array(81).fill({ value: "", locked: false });
+  const newCells = Array(81).fill(null).map(()=>({ value: "", locked: false }));
   const filledIndexes = new Set();
 
   while (filledIndexes.size < numOfCellsToFill) {

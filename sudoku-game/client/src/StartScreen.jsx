@@ -1,5 +1,5 @@
 // StartScreen.jsx
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -10,7 +10,7 @@ function StartScreen({ onStart }) {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleStart = async () => {
+  const handleStart = useCallback(async () => {
     if (name.trim() !== "" && password.trim() !== "") {
       try {
         const response = await axios.post(
@@ -34,7 +34,7 @@ function StartScreen({ onStart }) {
     } else {
       alert("Lütfen geçerli bir kullanıcı adı ve şifre girin!");
     }
-  };
+  }, [name, password, onStart, navigate]);
 
   const handleRegisterRedirect = () => {
     navigate("/register");

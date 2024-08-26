@@ -18,7 +18,7 @@ export const handleChange = (
     if (newValue !== oldValue) {
       const oldScore = oldValue ? 5 : 0;
       const newScore = newValue ? 5 : 0;
-      setSkorCount((prev) => prev + newScore - oldScore);
+      setSkorCount((prev) => Number(prev) + newScore - oldScore);
     }
     newCells[index] = { ...newCells[index], value: newValue };
   } else {
