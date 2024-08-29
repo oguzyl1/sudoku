@@ -15,7 +15,7 @@
         "use": "@vercel/node"
       },
       {
-        "src": "client/package.json",
+        "src": "/sudoku-game/client/package.json",
         "use": "@vercel/static-build",
         "config": {
           "distDir": "/sudoku-game/client/dist"
