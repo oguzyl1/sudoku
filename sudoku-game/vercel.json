@@ -2,23 +2,23 @@
     "rewrites": [
       {
         "source": "/api/(.*)",
-        "destination": "/sudoku-game/backend/api/$1"
+        "destination": "/api/$1"  
       },
       {
         "source": "/(.*)",
-        "destination": "/sudoku-game/client/index.html"
+        "destination": "/dist/$1"  
       }
     ],
     "builds": [
       {
-        "src": "/sudoku-game/backend/server.js",
+        "src": "backend/server.js",
         "use": "@vercel/node"
       },
       {
-        "src": "/sudoku-game/client/package.json",
+        "src": "client/package.json",
         "use": "@vercel/static-build",
         "config": {
-          "distDir": "/sudoku-game/client/dist"
+          "distDir": "client/dist"
         }
       }
     ]
