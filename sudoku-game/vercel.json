@@ -11,14 +11,14 @@
     ],
     "builds": [
       {
-        "src": "backend/server.js",
+        "src": "/sudoku-game/backend/server.js",
         "use": "@vercel/node"
       },
       {
-        "src": "client/package.json",
+        "src": "/sudoku-game/client/package.json",
         "use": "@vercel/static-build",
         "config": {
-          "distDir": "client/dist"
+          "distDir": "/sudoku-game/client/dist"
         }
       }
     ]
